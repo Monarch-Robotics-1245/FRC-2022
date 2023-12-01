@@ -6,9 +6,19 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.auto.AutoCommand;
+import frc.robot.commands.ClimbCommand;
+import frc.robot.commands.DriveCommand;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.ShootCommand;
+import frc.robot.commands.StorageCommand;
+import frc.robot.subsystems.BallShooter;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Storage;
+import frc.robot.subsystems.Climb;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -18,14 +28,46 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final DriveTrain driveTrain;
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  private final BallShooter ballShooter;
+
+  private final Climb climb;
+
+  private final Intake intake;
+
+  private final Storage storage;
+
+  private final DriveCommand driveCommand;
+
+  private final AutoCommand autoCommand;
+
+  private final ShootCommand shootCmd;
+
+  private final IntakeCommand intakeCommand;
+  
+  private final StorageCommand storageCommand;
+
+  private final ClimbCommand climbCommand;
+
+
+
   public RobotContainer() {
     // Configure the button bindings
+    driveTrain = new DriveTrain();
+    ballShooter = new BallShooter();
+    intake = new Intake();
+    storage = new Storage();
+    climb = new Climb();
+    driveCommand = new DriveCommand(driveTrain);
+    autoCommand = new AutoCommand(driveTrain, intake, ballShooter, storage);
+    shootCmd = new ShootCommand(ballShooter);
+    intakeCommand = new IntakeCommand(intake);
+    storageCommand = new StorageCommand(storage);
+    climbCommand = new ClimbCommand(climb);
     configureButtonBindings();
+
   }
 
   /**
@@ -43,6 +85,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return autoCommand;
   }
 }

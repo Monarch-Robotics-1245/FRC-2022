@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="FRC2022">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/build/libs/FRC2022.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
